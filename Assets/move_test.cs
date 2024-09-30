@@ -29,16 +29,21 @@ public class move_test : MonoBehaviour
 
         if (moveX != 0 || moveY != 0)
         {
-            animator.SetFloat("RunState", 0.5f);
+            animator.SetBool("1_Move", true);
+            if(moveX > 0)
+                transform.localScale = new Vector2(-1,1);
+            if (moveX < 0)
+                transform.localScale = new Vector2(1, 1);
+
         }
         else
         {
-            animator.SetFloat("RunState", 0);
+            animator.SetBool("1_Move", false);
         }
 
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            animator.SetTrigger("Attack");
+            animator.SetTrigger("2_Attack");
         }
     }
 }
