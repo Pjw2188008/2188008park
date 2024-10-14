@@ -115,4 +115,14 @@ public class Monster : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, 0.5f); // 방향으로 레이캐스트
         return hit.collider != null && hit.collider.gameObject.layer == LayerMask.NameToLayer("Wall"); // 벽 레이어에 충돌하면 true 반환
     }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, detectionRange);
+
+        // 공격 범위 기즈모도 추가
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, attackRange);
+    }
 }

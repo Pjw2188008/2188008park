@@ -8853,25 +8853,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1876840363}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &843079986
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 843079982}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5a368a90dfd9d244a935dc044408478, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 1931734951}
-  chaseRange: 5
-  attackRange: 1.5
-  moveSpeed: 2
-  returnSpeed: 2
-  attackCooldown: 2
-  attackDamage: 10
 --- !u!61 &843079987
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -8958,7 +8939,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 2
   attackRange: 1.5
-  detectionRange: 5
+  detectionRange: 8
   attackDamage: 10
   animator: {fileID: 843079991}
   player: {fileID: 1931734951}
@@ -17153,10 +17134,6 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7996195930865838644, guid: f82c27a4f4be4804ea14d3b916847586,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 843079986}
     - targetCorrespondingSourceObject: {fileID: 7996195930865838644, guid: f82c27a4f4be4804ea14d3b916847586,
         type: 3}
       insertIndex: -1
