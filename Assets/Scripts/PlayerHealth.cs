@@ -9,6 +9,7 @@ public class PlayerHealth : MonoBehaviour
 
     [Header("UI Elements")]
     public Slider healthBar; // 체력바 Slider
+    public GameObject gameOverPanel; // 게임 오버 UI 패널
 
     [Header("Animator")]
     public Animator animator; // Animator 컴포넌트
@@ -37,6 +38,16 @@ public class PlayerHealth : MonoBehaviour
             {
                 Debug.LogError("Animator component not found on the GameObject.");
             }
+        }
+
+        // 게임 오버 패널 비활성화
+        if (gameOverPanel != null)
+        {
+            gameOverPanel.SetActive(false);
+        }
+        else
+        {
+            Debug.LogError("GameOverPanel is not assigned in the Inspector.");
         }
     }
 
@@ -90,21 +101,29 @@ public class PlayerHealth : MonoBehaviour
     void Die()
     {
         Debug.Log("Player has died.");
-        // 추가적인 게임오버 처리 로직을 여기에 작성하세요.
-        // 예: 게임오버 화면 표시, 캐릭터 비활성화 등
+
+        // 게임 오버 패널 활성화
+        if (gameOverPanel != null)
+        {
+            gameOverPanel.SetActive(true);
+        }
+
+        // 게임 멈춤 (게임 오버 상태)
+        Time.timeScale = 0;
+
+        // 추가적인 게임오버 처리 로직
+        // 예: 캐릭터 비활성화 등
     }
 
     /// <summary>
     /// 테스트용 Update 메서드 (예: 키 입력으로 데미지 받기)
     /// </summary>
-   //void Update()
-   //{
-        // 예시: 스페이스 키를 누르면 데미지를 받음
-        //if (Input.GetKeyDown(KeyCode.Space))
-        //{
-            //TakeDamage(10);
-        //}
+    //void Update()
+    //{
+    // 예시: 스페이스 키를 누르면 데미지를 받음
+    //if (Input.GetKeyDown(KeyCode.Space))
+    //{
+    //TakeDamage(10);
+    //}
     //}
 }
-
-
