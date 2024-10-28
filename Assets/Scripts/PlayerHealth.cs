@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -51,10 +52,6 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 플레이어가 데미지를 받을 때 호출되는 메서드
-    /// </summary>
-    /// <param name="damage">입는 데미지 양</param>
     public void TakeDamage(int damage)
     {
         if (currentHealth <= 0)
@@ -95,9 +92,6 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 플레이어가 죽었을 때 호출되는 메서드
-    /// </summary>
     void Die()
     {
         Debug.Log("Player has died.");
@@ -110,20 +104,14 @@ public class PlayerHealth : MonoBehaviour
 
         // 게임 멈춤 (게임 오버 상태)
         Time.timeScale = 0;
-
-        // 추가적인 게임오버 처리 로직
-        // 예: 캐릭터 비활성화 등
     }
 
     /// <summary>
-    /// 테스트용 Update 메서드 (예: 키 입력으로 데미지 받기)
+    /// 게임을 재시작하는 메서드, Stage0 씬을 다시 로드합니다.
     /// </summary>
-    //void Update()
-    //{
-    // 예시: 스페이스 키를 누르면 데미지를 받음
-    //if (Input.GetKeyDown(KeyCode.Space))
-    //{
-    //TakeDamage(10);
-    //}
-    //}
+    public void RestartGame()
+    {
+        Time.timeScale = 1; // 시간 흐름을 정상화
+        SceneManager.LoadScene("Stage0"); // Stage0 씬을 다시 로드
+    }
 }
