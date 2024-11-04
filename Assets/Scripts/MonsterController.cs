@@ -20,6 +20,7 @@ public class MonsterController : MonoBehaviour
         if (currentHealth <= 0) return;  // 이미 죽었으면 더 이상 데미지 받지 않음
 
         currentHealth -= damage;  // 데미지 계산
+        Debug.Log($"몬스터 체력: {currentHealth}/{maxHealth}");  // 체력 상태 로그
 
         if (currentHealth <= 0)
         {
@@ -30,6 +31,7 @@ public class MonsterController : MonoBehaviour
     // 몬스터가 죽었을 때 실행될 함수
     void Die()
     {
+        Debug.Log("몬스터가 죽었습니다.");  // 죽음 상태 로그
         // 죽음 애니메이션 실행 필요 시 아래 주석을 풀고 사용할 수 있음
         // animator.SetTrigger("4_Death");
 
@@ -37,4 +39,3 @@ public class MonsterController : MonoBehaviour
         Destroy(gameObject);  // 몬스터 오브젝트 즉시 파괴
     }
 }
-

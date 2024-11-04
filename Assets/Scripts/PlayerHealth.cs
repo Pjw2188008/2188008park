@@ -52,6 +52,19 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
+    public void HealToFull()
+    {
+        currentHealth = maxHealth;
+
+        // 체력바 업데이트
+        if (healthBar != null)
+        {
+            healthBar.value = currentHealth;
+        }
+
+        Debug.Log("Player's health is fully restored!");
+    }
+
     public void TakeDamage(int damage)
     {
         if (currentHealth <= 0)

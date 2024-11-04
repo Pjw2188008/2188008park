@@ -7,27 +7,30 @@ public class move_test : MonoBehaviour
     private Animator animator;
     public int attackDamage = 10;  // 플레이어가 줄 데미지
     public float attackRange = 1.0f;  // 공격 범위
+    public float attackCooldown = 1.0f;  // 공격 속도 조절 (초 단위)
+    public float hitCooldown = 1.0f;  // 피격 후 공격 불가 시간
+
+    private float nextAttackTime = 0f;  // 다음 공격 가능 시간
+    private bool isHit = false;  // 피격 상태 여부
+    private float hitTime;       // 피격 당한 시간
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
     void Update()
     {
+        // 피격 상태가 활성화된 경우 1초가 지나면 해제
+        if (isHit && Time.time >= hitTime + hitCooldown)
+        {
+            isHit = false;  // 피격 상태 해제
+        }
+
         float moveX = Input.GetAxis("Horizontal");
         float moveY = Input.GetAxis("Vertical");
 
         Vector3 moveVector = new Vector3(moveX, moveY, 0f);
-
-        // 플레이어의 이동
         transform.Translate(moveVector.normalized * Time.deltaTime * 5f);
 
         if (moveX != 0 || moveY != 0)
@@ -43,35 +46,49 @@ public class move_test : MonoBehaviour
             animator.SetBool("1_Move", false);
         }
 
-        // 공격 키 입력 (Z키)
-        if (Input.GetKeyDown(KeyCode.Z))
+        // 공격 키 입력 (Z키)와 공격 속도 및 피격 상태 확인
+        if (Input.GetKeyDown(KeyCode.Z) && Time.time >= nextAttackTime && !isHit)
         {
             animator.SetTrigger("2_Attack");
             Attack();  // 공격 함수 실행
+            nextAttackTime = Time.time + attackCooldown;  // 공격 쿨다운 설정
         }
     }
 
-    // 공격 처리 함수
     void Attack()
     {
-        // 공격 방향에 있는 몬스터를 바로 감지하기 위해 오버랩 서클(OverlapCircle)을 사용
-        Collider2D[] hitMonsters = Physics2D.OverlapCircleAll(transform.position + transform.right * attackRange, 0.5f);
+        Vector2 attackDirection = transform.localScale.x > 0 ? Vector2.right : Vector2.left;
+        Vector2 attackPosition = (Vector2)transform.position + attackDirection * attackRange;
+        Vector2 attackSize = new Vector2(1.0f, 0.5f);
+
+        RaycastHit2D[] hitMonsters = Physics2D.BoxCastAll(attackPosition, attackSize, 0f, Vector2.zero);
 
         foreach (var hit in hitMonsters)
         {
-            MonsterController monster = hit.GetComponent<MonsterController>();
+            MonsterController monster = hit.collider.GetComponent<MonsterController>();
             if (monster != null)
             {
-                // 몬스터의 데미지 애니메이션이 바로 실행되도록 데미지 적용
-                monster.TakeDamage(attackDamage);
+                Debug.Log("몬스터에게 데미지를 입힙니다.");  // 디버그 로그
+                monster.TakeDamage(attackDamage);  // 공격력에 따라 체력 감소
             }
         }
     }
 
-    // 공격 범위를 시각화하기 위한 디버그 코드 (유니티의 Scene 뷰에서 확인 가능)
+    // 피격 처리 함수 (몬스터가 공격할 때 호출)
+    public void TakeHit()
+    {
+        isHit = true;              // 피격 상태 활성화
+        hitTime = Time.time;       // 피격 시간 기록
+        Debug.Log("플레이어가 피격되었습니다!");  // 디버그 로그
+    }
+
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position + transform.right * attackRange, 0.5f);
+        Vector2 attackDirection = transform.localScale.x > 0 ? Vector2.right : Vector2.left;
+        Vector2 attackPosition = (Vector2)transform.position + attackDirection * attackRange;
+        Vector2 attackSize = new Vector2(1.0f, 0.5f);
+
+        Gizmos.DrawWireCube(attackPosition, attackSize);
     }
 }
