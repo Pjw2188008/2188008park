@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Flag : MonoBehaviour
@@ -9,8 +7,15 @@ public class Flag : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             Debug.Log("Player reached the flag!");
-            FindObjectOfType<StageManager>().ClearStage();
+            StageManager stageManager = FindObjectOfType<StageManager>();
+            if (stageManager != null)
+            {
+                stageManager.ClearStage();
+            }
+            else
+            {
+                Debug.LogError("StageManager not found in the scene!");
+            }
         }
     }
 }
-

@@ -1,17 +1,18 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
 public class StageManager : MonoBehaviour
 {
     public GameObject flag; // 깃발 오브젝트
-    public Transform[] stagePositions; // 타일맵에서 각 스테이지의 주요 위치
-    private List<int> remainingStages = new List<int>(); // 남은 스테이지 인덱스 관리       
-    private List<GameObject> Enemy1sInStage = new List<GameObject>();
+    public Transform[] stagePositions; // 스테이지 중심 위치 배열
+    public float stageRadius = 10f; // 스테이지 반경
+    private List<int> remainingStages = new List<int>(); // 남은 스테이지 인덱스
+    private int currentStageIndex = 0; // 현재 스테이지 인덱스
+    private List<GameObject> monstersInStage = new List<GameObject>(); // 현재 스테이지의 몬스터 리스트
 
     void Start()
     {
-        // 남은 스테이지 초기화
+        // 모든 스테이지를 초기화
         for (int i = 0; i < stagePositions.Length; i++)
         {
             remainingStages.Add(i);
@@ -19,54 +20,88 @@ public class StageManager : MonoBehaviour
 
         // 깃발 비활성화
         if (flag != null) flag.SetActive(false);
+
+        // 첫 번째 스테이지 시작
+        MoveToStage(0);
     }
 
     void Update()
     {
-        // 남아 있는 몬스터 리스트에서 null 제거
-        Enemy1sInStage.RemoveAll(monster => monster == null);
+        // 현재 스테이지 몬스터 리스트를 정리 (null 제거)
+        monstersInStage.RemoveAll(monster => monster == null);
 
-        // 현재 스테이지 내 모든 몬스터가 제거되었을 경우 깃발 활성화
-        if (Enemy1sInStage.Count == 0 && flag != null && !flag.activeSelf)
+        // 모든 몬스터가 제거되었으면 깃발 활성화
+        if (monstersInStage.Count == 0 && flag != null && !flag.activeSelf)
         {
             flag.SetActive(true);
-            Debug.Log("All monsters defeated in the current stage! Go to the flag!");
-        }
-    }
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        // 스테이지 영역에 들어온 몬스터를 추적
-        if (other.CompareTag("Enemy1"))
-        {
-            if (!Enemy1sInStage.Contains(other.gameObject))
-            {
-                Enemy1sInStage.Add(other.gameObject);
-            }
+            Debug.Log("All monsters defeated in the current stage! Flag activated!");
         }
     }
 
-    private void OnTriggerExit2D(Collider2D other)
+    void MoveToStage(int stageIndex)
     {
-        // 스테이지 영역에서 나간 몬스터를 제거
-        if (other.CompareTag("Enemy1"))
+        if (stageIndex < 0 || stageIndex >= stagePositions.Length)
         {
-            if (Enemy1sInStage.Contains(other.gameObject))
+            Debug.LogError("Invalid stage index!");
+            return;
+        }
+
+        // 현재 스테이지를 업데이트
+        currentStageIndex = stageIndex;
+
+        // 현재 스테이지 몬스터 초기화
+        UpdateMonstersInStage();
+
+        // 플레이어를 해당 스테이지 위치로 이동
+        GameObject player = GameObject.FindWithTag("Player");
+        if (player != null)
+        {
+            player.transform.position = stagePositions[stageIndex].position;
+            Debug.Log($"Moved to stage {stageIndex + 1}");
+        }
+        else
+        {
+            Debug.LogError("Player not found!");
+        }
+
+        // 깃발 비활성화
+        if (flag != null)
+        {
+            flag.SetActive(false);
+        }
+    }
+
+    void UpdateMonstersInStage()
+    {
+        // 현재 스테이지 내 몬스터 초기화
+        monstersInStage.Clear();
+        GameObject[] allMonsters = GameObject.FindGameObjectsWithTag("Enemy1");
+        foreach (GameObject monster in allMonsters)
+        {
+            float distance = Vector3.Distance(stagePositions[currentStageIndex].position, monster.transform.position);
+            if (distance <= stageRadius) // 반경 내에 있는 몬스터만 추가
             {
-                Enemy1sInStage.Remove(other.gameObject);
+                monstersInStage.Add(monster);
             }
         }
+
+        Debug.Log($"Monsters in stage {currentStageIndex + 1}: {monstersInStage.Count}");
     }
 
     public void ClearStage()
     {
-        Debug.Log("Stage Cleared!");
-        flag.SetActive(false); // 깃발 비활성화
+        Debug.Log($"Stage {currentStageIndex + 1} Cleared!");
 
-        // 현재 스테이지 제거
-        int currentStage = GetCurrentStageIndex();
-        if (remainingStages.Contains(currentStage))
+        // 현재 스테이지를 남은 스테이지에서 제거
+        if (remainingStages.Contains(currentStageIndex))
         {
-            remainingStages.Remove(currentStage);
+            remainingStages.Remove(currentStageIndex);
+        }
+
+        // 깃발 비활성화
+        if (flag != null)
+        {
+            flag.SetActive(false);
         }
 
         // 다음 스테이지로 이동
@@ -77,42 +112,39 @@ public class StageManager : MonoBehaviour
         else
         {
             Debug.Log("All stages cleared!");
+            // 게임 종료 또는 기타 동작 수행
         }
     }
 
     void MoveToRandomStage()
     {
-        // 랜덤 스테이지 선택
+        if (remainingStages.Count == 0)
+        {
+            Debug.LogWarning("No remaining stages to move to!");
+            return;
+        }
+
+        // 랜덤으로 남은 스테이지 선택
         int randomIndex = Random.Range(0, remainingStages.Count);
         int nextStageIndex = remainingStages[randomIndex];
-        Transform nextStagePosition = stagePositions[nextStageIndex];
 
-        // 플레이어 이동
-        GameObject player = GameObject.FindWithTag("Player");
-        if (player != null)
-        {
-            player.transform.position = nextStagePosition.position;
-        }
-
-        Debug.Log($"Moved to stage {nextStageIndex + 1}");
+        // 선택된 스테이지로 이동
+        MoveToStage(nextStageIndex);
     }
 
-    int GetCurrentStageIndex()
+    // 스테이지 반경을 표시하는 Gizmos
+    private void OnDrawGizmos()
     {
-        // 현재 플레이어 위치에서 가까운 스테이지 찾기
-        GameObject player = GameObject.FindWithTag("Player");
-        if (player != null)
-        {
-            Vector3 playerPosition = player.transform.position;
+        if (stagePositions == null) return;
 
-            for (int i = 0; i < stagePositions.Length; i++)
+        // 모든 스테이지 반경 그리기
+        for (int i = 0; i < stagePositions.Length; i++)
+        {
+            if (stagePositions[i] != null)
             {
-                if (Vector3.Distance(playerPosition, stagePositions[i].position) < 1f)
-                {
-                    return i;
-                }
+                Gizmos.color = (i == currentStageIndex) ? Color.green : Color.red;
+                Gizmos.DrawWireSphere(stagePositions[i].position, stageRadius);
             }
         }
-        return -1; // 알 수 없는 스테이지
     }
 }
