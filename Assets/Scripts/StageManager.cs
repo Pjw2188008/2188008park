@@ -13,10 +13,10 @@ public class StageManager : MonoBehaviour
         // 스테이지별 제외 목록 설정
         exclusionMap = new Dictionary<string, List<string>>()
         {
-            { "Stage0", new List<string> { "BossStage" } }, // Stage0에서 보스 제외
-            { "Stage1", new List<string> { "Stage0", "BossStage" } }, // Stage1에서 Stage0, Boss 제외
-            { "Stage2", new List<string> { "Stage0", "BossStage" } },  // Stage2에서 Stage0, Boss 제외
-            { "Stage3", new List<string> { "Stage0", "BossStage" } }
+            { "Stage0", new List<string> { "Boss Stage" } }, // Stage0에서 보스 제외
+            { "Stage1", new List<string> { "Stage0", "Boss Stage" } }, // Stage1에서 Stage0, Boss 제외
+            { "Stage2", new List<string> { "Stage0", "Boss Stage" } },  // Stage2에서 Stage0, Boss 제외
+            { "Stage3", new List<string> { "Stage0", "Boss Stage" } }
         };
     }
 
