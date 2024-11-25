@@ -9,9 +9,15 @@ EditorBuildSettings:
     path: Assets/Scenes/Stage0.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
-    path: Assets/Scenes/FightRoom1.unity
-    guid: 814642155f84b5046b3f680e551c5f8d
+    path: Assets/Scenes/Stage1.unity
+    guid: 2707fa13f0e33774da3a51da5e146a1e
   - enabled: 1
-    path: Assets/Scenes/DemoRoom.unity
-    guid: b9f952e42c1a7dd49b9513b29d148d75
+    path: Assets/Scenes/Stage2.unity
+    guid: d6881dd6377ef8c4f869d253f83d63b8
+  - enabled: 1
+    path: Assets/Scenes/Stage3.unity
+    guid: 30a902b713c53d5409cc03f40a62659c
+  - enabled: 1
+    path: Assets/Scenes/Boss Stage.unity
+    guid: 3682db43098e80447b2fcaf21e255d66
   m_configObjects: {}
