@@ -62225,10 +62225,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d0aa3e1286c8d74e8ff8d1b96495508, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stageNames:
-  - Stage1
-  - Stage2
-  - Stage3
+  bossStage: Boss Stage
 --- !u!4 &1483355058
 Transform:
   m_ObjectHideFlags: 0
