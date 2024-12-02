@@ -27,13 +27,14 @@ public class StageManager : MonoBehaviour
             remainingStages.Remove(currentStage);
         }
 
-        if (remainingStages.Count > 0)
+        // 모든 스테이지 클리어 시 보스 스테이지로 이동
+        if (remainingStages.Count == 0)
         {
-            LoadRandomStage();
+            LoadBossStage();
         }
         else
         {
-            LoadBossStage();
+            LoadRandomStage();
         }
     }
 
