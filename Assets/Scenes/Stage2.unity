@@ -534,7 +534,7 @@ PrefabInstance:
     - target: {fileID: 7996195930865838644, guid: f82c27a4f4be4804ea14d3b916847586,
         type: 3}
       propertyPath: m_TagString
-      value: Enemy1
+      value: Monster
       objectReference: {fileID: 0}
     - target: {fileID: 9147532313570641222, guid: f82c27a4f4be4804ea14d3b916847586,
         type: 3}
@@ -78688,7 +78688,7 @@ PrefabInstance:
     - target: {fileID: 7996195930865838644, guid: f82c27a4f4be4804ea14d3b916847586,
         type: 3}
       propertyPath: m_TagString
-      value: Enemy1
+      value: Monster
       objectReference: {fileID: 0}
     - target: {fileID: 9147532313570641222, guid: f82c27a4f4be4804ea14d3b916847586,
         type: 3}
@@ -79464,7 +79464,7 @@ PrefabInstance:
     - target: {fileID: 7996195930865838644, guid: f82c27a4f4be4804ea14d3b916847586,
         type: 3}
       propertyPath: m_TagString
-      value: Enemy1
+      value: Monster
       objectReference: {fileID: 0}
     - target: {fileID: 9147532313570641222, guid: f82c27a4f4be4804ea14d3b916847586,
         type: 3}
@@ -79745,7 +79745,7 @@ PrefabInstance:
     - target: {fileID: 7996195930865838644, guid: f82c27a4f4be4804ea14d3b916847586,
         type: 3}
       propertyPath: m_TagString
-      value: Enemy1
+      value: Monster
       objectReference: {fileID: 0}
     - target: {fileID: 9147532313570641222, guid: f82c27a4f4be4804ea14d3b916847586,
         type: 3}
@@ -80026,7 +80026,7 @@ PrefabInstance:
     - target: {fileID: 7996195930865838644, guid: f82c27a4f4be4804ea14d3b916847586,
         type: 3}
       propertyPath: m_TagString
-      value: Enemy1
+      value: Monster
       objectReference: {fileID: 0}
     - target: {fileID: 9147532313570641222, guid: f82c27a4f4be4804ea14d3b916847586,
         type: 3}
@@ -90490,7 +90490,7 @@ PrefabInstance:
     - target: {fileID: 7996195930865838644, guid: f82c27a4f4be4804ea14d3b916847586,
         type: 3}
       propertyPath: m_TagString
-      value: Enemy1
+      value: Monster
       objectReference: {fileID: 0}
     - target: {fileID: 9147532313570641222, guid: f82c27a4f4be4804ea14d3b916847586,
         type: 3}
@@ -90818,7 +90818,7 @@ PrefabInstance:
     - target: {fileID: 7996195930865838644, guid: f82c27a4f4be4804ea14d3b916847586,
         type: 3}
       propertyPath: m_TagString
-      value: Enemy1
+      value: Monster
       objectReference: {fileID: 0}
     - target: {fileID: 9147532313570641222, guid: f82c27a4f4be4804ea14d3b916847586,
         type: 3}
@@ -91099,7 +91099,7 @@ PrefabInstance:
     - target: {fileID: 7996195930865838644, guid: f82c27a4f4be4804ea14d3b916847586,
         type: 3}
       propertyPath: m_TagString
-      value: Enemy1
+      value: Monster
       objectReference: {fileID: 0}
     - target: {fileID: 9147532313570641222, guid: f82c27a4f4be4804ea14d3b916847586,
         type: 3}
@@ -91617,7 +91617,7 @@ PrefabInstance:
     - target: {fileID: 7996195930865838644, guid: f82c27a4f4be4804ea14d3b916847586,
         type: 3}
       propertyPath: m_TagString
-      value: Enemy1
+      value: Monster
       objectReference: {fileID: 0}
     - target: {fileID: 9147532313570641222, guid: f82c27a4f4be4804ea14d3b916847586,
         type: 3}
