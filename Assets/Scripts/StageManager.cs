@@ -4,32 +4,58 @@ using UnityEngine.SceneManagement;
 
 public class StageManager : MonoBehaviour
 {
-    private List<string> stageScenes = new List<string> { "Stage1", "Stage2", "Stage3" }; // 일반 스테이지 이름
+    private static StageManager instance;
+
+    private List<string> stageScenes = new List<string> { "Stage0", "Stage1", "Stage2", "Stage3" }; // 일반 스테이지 이름
     public string bossStage = "Boss Stage"; // 보스 스테이지 이름
 
-    private List<string> remainingStages; // 클리어하지 않은 스테이지
-    private HashSet<string> clearedStages = new HashSet<string>(); // 클리어한 스테이지
+    private List<string> remainingStages;
+    private HashSet<string> clearedStages;
 
-    void Start()
+    private void Awake()
     {
-        // 스테이지 초기화
+        // Singleton 패턴 적용
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+            InitializeStages();
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    private void InitializeStages()
+    {
+        // 스테이지 상태 초기화
         remainingStages = new List<string>(stageScenes);
+        clearedStages = new HashSet<string>();
+        Debug.Log("남은 스테이지 초기화: " + string.Join(", ", remainingStages));
     }
 
     public void MoveToRandomStage()
     {
         string currentStage = SceneManager.GetActiveScene().name;
+        Debug.Log("현재 스테이지: " + currentStage);
 
         // 현재 스테이지를 클리어 처리
         if (!clearedStages.Contains(currentStage))
         {
             clearedStages.Add(currentStage);
-            remainingStages.Remove(currentStage);
+
+            if (remainingStages.Contains(currentStage))
+            {
+                remainingStages.Remove(currentStage);
+                Debug.Log("클리어된 스테이지 제거: " + currentStage);
+            }
         }
 
         // 모든 스테이지 클리어 시 보스 스테이지로 이동
         if (remainingStages.Count == 0)
         {
+            Debug.Log("모든 스테이지 클리어! 보스 스테이지로 이동.");
             LoadBossStage();
         }
         else
@@ -42,11 +68,13 @@ public class StageManager : MonoBehaviour
     {
         int randomIndex = Random.Range(0, remainingStages.Count);
         string nextStage = remainingStages[randomIndex];
+        Debug.Log("다음 스테이지: " + nextStage);
         SceneManager.LoadScene(nextStage);
     }
 
     private void LoadBossStage()
     {
-        SceneManager.LoadScene(bossStage);
+        Debug.Log("보스 스테이지로 이동: " + bossStage);
+        SceneManager.LoadScene("Boss Stage");
     }
 }
