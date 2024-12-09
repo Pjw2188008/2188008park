@@ -32,10 +32,29 @@ public class MonsterController : MonoBehaviour
     void Die()
     {
         Debug.Log("몬스터가 죽었습니다.");  // 죽음 상태 로그
-        // 죽음 애니메이션 실행 필요 시 아래 주석을 풀고 사용할 수 있음
+
+        // AreaManager에 알리기
+        NotifyAreaManager();
+
+        // 애니메이션 실행 필요 시 아래 주석을 풀고 사용할 수 있음
         // animator.SetTrigger("4_Death");
 
-        // 애니메이션 실행 대기 없이 바로 몬스터 삭제
-        Destroy(gameObject);  // 몬스터 오브젝트 즉시 파괴
+        // 상위 부모 오브젝트 제거
+        GameObject parent = transform.root.gameObject;
+        Destroy(parent);  // 최상위 부모 제거
+    }
+
+    // 부모 오브젝트의 AreaManager에 몬스터 제거 알림
+    void NotifyAreaManager()
+    {
+        Transform areaParent = transform.root.parent;  // 최상위 부모의 부모(구역 오브젝트)
+        if (areaParent != null)
+        {
+            AreaManager areaManager = areaParent.GetComponent<AreaManager>();
+            if (areaManager != null)
+            {
+                areaManager.CheckMonsters();  // AreaManager에 상태 업데이트 요청
+            }
+        }
     }
 }
