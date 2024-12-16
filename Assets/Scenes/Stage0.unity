@@ -60434,7 +60434,8 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1264216420768546274, guid: 589cc6e845afa494f90d694d85d29a4f, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -62170,7 +62171,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d0aa3e1286c8d74e8ff8d1b96495508, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bossStage: Boss Stage
+  gameClearScene: Game Clear
 --- !u!4 &1483355058
 Transform:
   m_ObjectHideFlags: 0
