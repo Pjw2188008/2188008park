@@ -77672,7 +77672,7 @@ PrefabInstance:
     - target: {fileID: 4743825859767405405, guid: f82c27a4f4be4804ea14d3b916847586,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 31.111883
+      value: 21.4
       objectReference: {fileID: 0}
     - target: {fileID: 4743825859767405405, guid: f82c27a4f4be4804ea14d3b916847586,
         type: 3}
@@ -90844,7 +90844,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d0aa3e1286c8d74e8ff8d1b96495508, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bossStage: Boss Stage
+  gameClearScene: Game Clear
 --- !u!4 &1716814135
 Transform:
   m_ObjectHideFlags: 0

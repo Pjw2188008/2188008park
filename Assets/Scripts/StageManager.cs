@@ -7,7 +7,7 @@ public class StageManager : MonoBehaviour
     private static StageManager instance;
 
     private List<string> stageScenes = new List<string> { "Stage0", "Stage1", "Stage2", "Stage3" }; // 일반 스테이지 이름
-    public string bossStage = "Boss Stage"; // 보스 스테이지 이름
+    public string gameClearScene = "Game Clear"; // 게임 클리어 씬 이름
 
     private List<string> remainingStages;
     private HashSet<string> clearedStages;
@@ -52,11 +52,11 @@ public class StageManager : MonoBehaviour
             }
         }
 
-        // 모든 스테이지 클리어 시 보스 스테이지로 이동
+        // 모든 스테이지 클리어 시 게임 클리어 씬으로 이동
         if (remainingStages.Count == 0)
         {
-            Debug.Log("모든 스테이지 클리어! 보스 스테이지로 이동.");
-            LoadBossStage();
+            Debug.Log("모든 스테이지 클리어! 게임 클리어 씬으로 이동.");
+            LoadGameClearScene();
         }
         else
         {
@@ -72,9 +72,9 @@ public class StageManager : MonoBehaviour
         SceneManager.LoadScene(nextStage);
     }
 
-    private void LoadBossStage()
+    private void LoadGameClearScene()
     {
-        Debug.Log("보스 스테이지로 이동: " + bossStage);
-        SceneManager.LoadScene("Boss Stage");
+        Debug.Log("게임 클리어 씬으로 이동: " + gameClearScene);
+        SceneManager.LoadScene(gameClearScene);
     }
 }
